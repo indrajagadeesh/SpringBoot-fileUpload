@@ -55,6 +55,7 @@ public class FileStorageService {
 
             String outputFile = fileName+".txt";
             String command = args +" "+fileStorageLocation.toString()+"/"+fileName+ " > "+fileDownloadLocation.toString()+"/"+outputFile;
+            System.out.println(command);
             Runtime.getRuntime().exec(command);
             return outputFile;
         } catch (IOException ex) {
