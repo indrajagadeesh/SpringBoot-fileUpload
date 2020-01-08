@@ -1,3 +1,5 @@
+check java presence using "java --version" ; shouild be more than 11.
+
 git clone this repo
 
 cd SpringBoot-fileUpload
