@@ -67,6 +67,7 @@ public class FileStorageService {
                 bw.write(s);
                 bw.newLine();
             }
+            bw.close();
             if ((s = stdError.readLine()) != null) {
                 System.out.println("Here is the standard error of the command (if any):\n");
                 System.out.println(s);
