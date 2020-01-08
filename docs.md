@@ -20,6 +20,13 @@ cd /home/test/webservice/SpringBoot-fileUpload/src/main/resources
 
 edit application.properties and paste in working directory
 
+
+## Other edits if required
+
 cd /home/test/webservice/SpringBoot-fileUpload/src/main/java/com/zoho/zlabs/service
 
 edit FileStorageService.java for src and out directories
+
+cd /home/test/webservice/SpringBoot-fileUpload/src/main/resources/static
+
+edit indel.html for outpot names of web page
