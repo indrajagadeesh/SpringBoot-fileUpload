@@ -19,3 +19,7 @@ chmod +x ./VideoProcessingFFMpeg-0.0.1.jar
 cd /home/test/webservice/SpringBoot-fileUpload/src/main/resources
 
 edit application.properties and paste in working directory
+
+cd /home/test/webservice/SpringBoot-fileUpload/src/main/java/com/zoho/zlabs/service
+
+edit FileStorageService.java for src and out directories
