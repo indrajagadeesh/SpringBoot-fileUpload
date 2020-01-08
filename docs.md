@@ -10,7 +10,7 @@ mvn clean install
 
 ll ./target/
 
-sudo cp ./target/VideoProcessingFFMpeg-0.0.1.jar ../
+cp ./target/VideoProcessingFFMpeg-0.0.1.jar ../
 
 cd ..
 
