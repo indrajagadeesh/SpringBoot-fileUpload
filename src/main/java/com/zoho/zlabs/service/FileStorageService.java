@@ -54,8 +54,7 @@ public class FileStorageService {
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             String outputFile = fileName+".txt";
-            String command = args +" "+fileStorageLocation.toString()+fileName+ " > "+fileDownloadLocation.toString()+"\\"+outputFile;
-            System.out.println(command);
+            String command = args +" "+fileStorageLocation.toString()+"/"+fileName+ " > "+fileDownloadLocation.toString()+"/"+outputFile;
             Runtime.getRuntime().exec(command);
             return outputFile;
         } catch (IOException ex) {
