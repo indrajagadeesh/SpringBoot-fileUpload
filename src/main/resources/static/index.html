@@ -18,8 +18,11 @@
                     <h3>Upload Single Video File</h3>
                     <form id="singleUploadForm" name="singleUploadForm">
                         <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
-                        <button type="submit" class="primary submit-btn">Submit</button>
+                        <button type="submit" class="primary submit-btn" onclick="processing()">Submit</button>
                     </form>
+                    <div class="upload-response-process">
+                        <div id="singleFileUploadProcess"></div>
+                    </div>
                     <div class="upload-response">
                         <div id="singleFileUploadError"></div>
                         <div id="singleFileUploadSuccess"></div>
@@ -28,5 +31,11 @@
             </div>
         </div>
         <script src="/js/main.js" ></script>
+        <script>
+        function processing() {
+        document.querySelector('#singleFileUploadProcess').innerHTML = "<p>submit a request please wait while we process</p>";
+        document.querySelector('#singleFileUploadProcess').style.display = "block";
+        }
+        </script>
     </body>
 </html>
