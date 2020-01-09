@@ -5,6 +5,8 @@ var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
 var singleFileUploadError = document.querySelector('#singleFileUploadError');
 var singleFileUploadSuccess = document.querySelector('#singleFileUploadSuccess');
 var singleFileUploadProcess = document.querySelector('#singleFileUploadProcess');
+var singleFileInOut = document.querySelector('#singleFileInOut');
+var singleFileOutOut = document.querySelector('#singleFileOutOut');
 
 var multipleUploadForm = document.querySelector('#multipleUploadForm');
 var multipleFileUploadInput = document.querySelector('#multipleFileUploadInput');
@@ -25,6 +27,8 @@ function uploadSingleFile(file) {
             singleFileUploadError.style.display = "none";
             singleFileUploadProcess.style.display = "none";
             singleFileUploadProcess.innerHTML= "";
+            singleFileInOut.innerHTML= "<p> Input Video Analysis \n "+response.outIn+" </p>";
+            singleFileOutOut.innerHTML= "<p> Input Video Analysis \n "+response.outOut+" </p>";
             singleFileUploadSuccess.innerHTML = "<p>File Uploaded Successfully.</p><p>DownloadUrl : <a href='" + response.fileDownloadUri + "' target='_blank'>" + response.fileDownloadUri + "</a></p>";
             singleFileUploadSuccess.style.display = "block";
         } else {

@@ -22,7 +22,9 @@ public class FileStorageService {
 
     private final Path fileStorageLocation;
     private final Path fileDownloadLocation;
-    private String args;
+    private String commands;
+    private String commandsIn;
+    private String commandsOut;
 
     @Autowired
     public FileStorageService(FileStorageProperties fileStorageProperties) {
@@ -30,7 +32,9 @@ public class FileStorageService {
                 .toAbsolutePath().normalize();
         this.fileDownloadLocation = Paths.get(fileStorageProperties.getDownloadDir())
                 .toAbsolutePath().normalize();
-        this.args = fileStorageProperties.getCommands();
+        this.commands = fileStorageProperties.getCommands();
+        this.commandsIn = fileStorageProperties.getCommandsIn();
+        this.commandsOut = fileStorageProperties.getCommandsOut();
         try {
             Files.createDirectories(this.fileStorageLocation);
             Files.createDirectories(this.fileDownloadLocation);
@@ -40,11 +44,12 @@ public class FileStorageService {
     }
 
 
-    public String storeFile(MultipartFile file) {
+    public String[] storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String s = null;
-        File fout = null;
+        String inOut = null;
+        String outOut = null;
         try {
             // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {
@@ -54,20 +59,26 @@ public class FileStorageService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            String outputFile = fileName + ".txt";
-            fout = new File(fileDownloadLocation.toString() + "/" + outputFile);
-            String command = args + " " + fileStorageLocation.toString() + "/" + fileName;
+            String outputFile = fileName.split("\\.")[0] +"_out."+fileName.split("\\.")[1];
+            String command = this.commands + " -i " + fileStorageLocation.toString() + "/" + fileName +" -y "+fileDownloadLocation.toString()+ "/" + outputFile;
+            String command1 = this.commandsIn +" "+ fileStorageLocation.toString() + "/" + fileName;
+            String command2 = this.commandsOut + " "+ fileDownloadLocation.toString()+ "/" + outputFile;
             System.out.println(command);
             Process p = Runtime.getRuntime().exec(command);
+            Process p1 = Runtime.getRuntime().exec(command1);
+            Process p2 = Runtime.getRuntime().exec(command2);
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
             BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            FileOutputStream fos = new FileOutputStream(fout);
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+            BufferedReader stdInput1 = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+            BufferedReader stdError1 = new BufferedReader(new InputStreamReader(p1.getErrorStream()));
+            BufferedReader stdInput2 = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+            BufferedReader stdError2 = new BufferedReader(new InputStreamReader(p2.getErrorStream()));
+
+            System.out.println("1st command output");
             while ((s = stdInput.readLine()) != null) {
-                bw.write(s);
-                bw.newLine();
+                System.out.println(s);
             }
-            bw.close();
+
             if ((s = stdError.readLine()) != null) {
                 System.out.println("Here is the standard error of the command (if any):\n");
                 System.out.println(s);
@@ -75,7 +86,32 @@ public class FileStorageService {
                     System.out.println(s);
                 }
             }
-            return outputFile;
+            System.out.println("2nd command output");
+            while ((s = stdInput1.readLine()) != null) {
+                inOut += s + " ";
+            }
+
+            if ((s = stdError1.readLine()) != null) {
+                System.out.println("Here is the standard error of the command (if any):\n");
+                System.out.println(s);
+                while ((s = stdError.readLine()) != null) {
+                    System.out.println(s);
+                }
+            }
+            System.out.println("3rd command output");
+            while ((s = stdInput2.readLine()) != null) {
+                outOut += s + " ";
+            }
+
+            if ((s = stdError2.readLine()) != null) {
+                System.out.println("Here is the standard error of the command (if any):\n");
+                System.out.println(s);
+                while ((s = stdError.readLine()) != null) {
+                    System.out.println(s);
+                }
+            }
+            String[] output = {outputFile,inOut,outOut};
+            return output;
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }

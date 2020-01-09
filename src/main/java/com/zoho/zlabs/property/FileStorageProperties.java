@@ -7,6 +7,24 @@ public class FileStorageProperties {
     private String uploadDir;
     private String downloadDir;
     private String commands;
+    private String commandsIn;
+    private String commandsOut;
+
+    public String getCommandsIn() {
+        return commandsIn;
+    }
+
+    public void setCommandsIn(String commandsIn) {
+        this.commandsIn = commandsIn;
+    }
+
+    public String getCommandsOut() {
+        return commandsOut;
+    }
+
+    public void setCommandsOut(String commandsOut) {
+        this.commandsOut = commandsOut;
+    }
 
     public String getCommands() {
         return commands;

@@ -5,12 +5,32 @@ public class UploadFileResponse {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
+    private String outIn;
+    private String outOut;
     private long size;
 
-    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
+    public String getOutIn() {
+        return outIn;
+    }
+
+    public void setOutIn(String outIn) {
+        this.outIn = outIn;
+    }
+
+    public String getOutOut() {
+        return outOut;
+    }
+
+    public void setOutOut(String outOut) {
+        this.outOut = outOut;
+    }
+
+    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, String outIn, String outOut, long size) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
+        this.outIn = outIn;
+        this.outOut = outOut;
         this.size = size;
     }
 
